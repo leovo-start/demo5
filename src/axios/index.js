@@ -1,11 +1,6 @@
-import ajax from "./ajax"
 import jsonp from "jsonp"
-import {message} from "antd"
-// //拦截器
-
-export const reqLogin = (username,password) => {
-    ajax.post('/api/login.json', {username, password})
-}
+import {message,Modal} from "antd"
+import axios from "axios"
 export const reqWeather = (city) =>{
      
     return new Promise((resolve,reject)=>{
@@ -23,13 +18,40 @@ export const reqWeather = (city) =>{
         })
     })
 }
-
-//获取分类列表
-
-
-export const reqCategorys = () => ajax.get('/api/category.json')
-
-
-export const reqAddCategory = (categporyName) => ajax.post('/api/addcategory.json',{
-   categporyName 
-})
+export default class Axios {
+    static ajax(options){
+        // let loading;
+        // if(options.data && options.data.isShowLoading!==false){
+        // loading=document.getElementById("ajaxLoading");
+        // loading.style.display="block";
+        // }
+        let baseApi="https://easy-mock.com/mock/5e79a06c1c4fd747cbb0efe7/mockapi"
+        return new Promise((resolve,reject)=>{
+        axios({
+        url:options.url,
+        method:"get",
+        baseURL:baseApi,
+        timeout:'1000ms',
+        params:(options.data && options.data.params)||""
+        }).then((response)=>{
+        // if(options.data && options.data.isShowLoading !==false){
+        // loading=document.getElementById("ajaxLoading");
+        // loading.style.display="none";
+        // }  
+        if(response.status === 200){
+           let res=response.data;
+           if(res.code === 0){
+            resolve(res);
+           }else{
+            Modal.info({
+            title:"提示",
+            content:res.msg
+            })
+           }
+        }else{
+        reject(response.data);
+        }
+        })
+        })
+        }  
+}

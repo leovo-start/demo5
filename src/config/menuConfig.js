@@ -22,18 +22,31 @@ const menuList = [
         },
       ]
     },
-  
     {
-      title: '用户管理',
-      key: '/user',
-      icon: 'user'
-    },
+      title: '表格',
+      key: '/table',
+      icon: 'safety',
+    }, 
     {
-      title: '角色管理',
-      key: '/role',
+      title: '城市管理',
+      key: '/city',
       icon: 'safety',
     },
-  
+    {
+      title: '订单管理',
+      key: '/order',
+      icon: 'safety',
+    },
+    {
+      title: '员工管理',
+      key: '/user',
+      icon: 'safety',
+    },
+    {
+      title: '车辆地图',
+      key: '/bikeMap',
+      icon: 'safety',
+    },
     {
       title: '图形图表',
       key: '/charts',
@@ -55,6 +68,11 @@ const menuList = [
           icon: 'pie-chart'
         },
       ]
+    },
+    {
+      title: '权限设置',
+      key: '/permission',
+      icon: 'safety',
     },
   ]
   

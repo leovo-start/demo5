@@ -6,6 +6,7 @@ import "./index.less"
 import { Time }  from "./../../utils"
 import {reqWeather} from "./../../axios"
 import menuList from "./../../config/menuConfig"
+import LocalStorage from "./../../utils"
 class Header extends Component {
 
      state = {
@@ -31,11 +32,12 @@ class Header extends Component {
        const {dayPictureUrl,weather} = await reqWeather("北京"); 
         this.setState({dayPictureUrl,weather})
       }
-     logout = () =>{
+      logout = () =>{
       Modal.confirm({
        title:"确认退出吗?",
-       onOk(){
-        console.log("ok") 
+       onOk: () =>{
+        LocalStorage.removeUser();
+         this.props.history.replace('/login')
        },
        onCancel(){
        console.log("onCancel")

@@ -1,28 +1,36 @@
 import React, { Component } from 'react'
 import Img from "./../../assets/logo-ant.svg"
 import {Input,Icon,Form,Button,message} from "antd"
+import {Redirect } from "react-router-dom"
 import "./login.less"
-import { reqLogin } from "./../../axios"
+import axios from "./../../axios"
+import LocalStorage from "./../../utils"
 const FormItem = Form.Item;
 class Login extends Component {
 
     handleSubmit = e =>{
     e.preventDefault();
     //对表单所有字段统一验证
-    this.props.form.validateFields(async(err,{username,password}) => {
-        if (!err) {
-         const result = await reqLogin(username,password)
-         console.log(result)
-         if(result.status == 0){
-         this.props.history.replace("/")
-         message.success('登陆成功!')
-         }else{
-            message.error(result.msg);
-         } 
-        
-        }else{
-          
+    this.props.form.validateFields((err,{username,password}) => {
+       
+       axios.ajax({
+        url:"/api/login.json",
+        data:{
+         username,
+         password   
         }
+       }).then((res)=>{
+          if(!err){
+             if(res.status === 0){
+                 const user = res.data;
+                 LocalStorage.saveUser(user)
+                this.props.history.replace('/')
+                message.success('登陆成功!')      
+             }else{
+                message.error(res.msg);  
+             }
+          }
+       })
       });
     }
 
@@ -43,6 +51,11 @@ class Login extends Component {
     }
     render () {
     const { getFieldDecorator } = this.props.form;
+    const user = LocalStorage.getUser();
+    console.log(user)
+    if (user._id) {
+      return <Redirect to="/login"/> 
+    }  
         return (
             <div className="login">
                 <div className="login-header">
