@@ -4,12 +4,12 @@ module.exports =override(
     fixBabelImports('import',{ //配置 babel-plugin-import
         libraryName:"antd", //针对的是antd
         libraryDirectory:'es',//源码文件中的es文件夹
-        style:"css" //自动打包相关css
+        style:true //自动打包相关css
     }),
     addLessLoader({
-    javascriptEnabled:true,
+    javascriptEnabled: true,
     modifyVars:{
-        '@primary-color':"#1DA57A"
-    }
+        '@primary-color':'#1DA57A'
+       }
     })
 )

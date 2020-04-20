@@ -1,17 +1,27 @@
 import React, { Component } from 'react'
 import Img from "./../../assets/logo-ant.svg"
-import {Input,Icon,Form,Button} from "antd"
+import {Input,Icon,Form,Button,message} from "antd"
 import "./login.less"
-
+import { reqLogin } from "./../../axios"
 const FormItem = Form.Item;
 class Login extends Component {
 
     handleSubmit = e =>{
     e.preventDefault();
     //对表单所有字段统一验证
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async(err,{username,password}) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+         const result = await reqLogin(username,password)
+         console.log(result)
+         if(result.status == 0){
+         this.props.history.replace("/")
+         message.success('登陆成功!')
+         }else{
+            message.error(result.msg);
+         } 
+        
+        }else{
+          
         }
       });
     }
@@ -24,7 +34,7 @@ class Login extends Component {
          callback("密码不能小于4位");
      }else if(value.length>12){
         callback("密码不能大于12位");
-     }else if(/^[a-zA-Z0-9_]+$/.test(value)){
+     }else if(!/^[a-zA-Z0-9_]+$/.test(value)){
         callback("用户名必须是英文,数字或下划线");
      }else{
          callback(); //验证通过

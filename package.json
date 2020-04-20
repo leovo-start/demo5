@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.26.15",
     "axios": "^0.19.2",
+    "jsonp": "^0.2.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",
     "react-dom": "^16.13.1",
@@ -40,5 +42,5 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0"
   },
-  "proxy:":"http://localhost:5000"
+  "proxy": "http://localhost:5000"
 }
